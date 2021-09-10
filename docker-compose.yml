@@ -41,18 +41,6 @@ services:
     networks:
       - A
 
-  # ftpserver:
-  #   image: stilliard/pure-ftpd:latest
-  #   container_name: ftpserver
-  #   ports:
-  #     - "21:21"
-  #   environment:
-  #     - FTP_USER_NAME=admin
-  #     - FTP_USER_PASS=admin
-  #     - FTP_USER_HOME=/home/admin
-  #   networks:
-  #     - A
-
   mlflow:
     image: mlflow
     container_name: mlflow
