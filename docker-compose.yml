@@ -33,9 +33,9 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_DATABASE=mlflow
-      - MYSQL_USER=$MYSQL_USER
-      - MYSQL_PASSWORD=$MYSQL_PASSWORD
-      - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ./dbdata:/var/lib/mysql
     networks:
@@ -54,20 +54,20 @@ services:
       - traefik_default
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mlflow.rule=Host(`$MLFLOW_TRACKING_HOSTNAME`)"
+      - "traefik.http.routers.mlflow.rule=Host(`${MLFLOW_TRACKING_HOSTNAME}`)"
       - "traefik.http.routers.mlflow.entrypoints=websecure"
       - "traefik.http.routers.mlflow.tls.certresolver=myresolver"
       - "traefik.http.middlewares.mlflow-redirectscheme.redirectscheme.scheme=https"
       - "traefik.http.middlewares.mlflow-redirectscheme.redirectscheme.permanent=true"
       - traefik.http.routers.mlflow.middlewares=mlflow-redirectscheme@docker,mlflow-basicauth@docker
       - traefik.docker.network=mlflow-docker-azure_traefik_default
-      - "traefik.http.middlewares.mlflow-basicauth.basicauth.users=$MLFLOW_TRACKING_USERNAME:$MLFLOW_TRACKING_PASSWORD_HASH"
+      - "traefik.http.middlewares.mlflow-basicauth.basicauth.users=${MLFLOW_TRACKING_USERNAME}:${MLFLOW_TRACKING_PASSWORD_HASH}"
     entrypoint: >
         wait-for-it traefik:443 -t 90 --
         wait-for-it mysql:3306 -t 180 --
         mlflow server
-        --backend-store-uri mysql://$MYSQL_USER:$MYSQL_PASSWORD@mysql:3306/mlflow
-        --default-artifact-root wasbs://$AZURE_STORAGE_CONTAINER@$AZURE_STORAGE_ACCOUNT.blob.core.windows.net
+        --backend-store-uri mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/mlflow
+        --default-artifact-root wasbs://${AZURE_STORAGE_CONTAINER}@${AZURE_STORAGE_ACCOUNT}.blob.core.windows.net
         -h 0.0.0.0
 
 networks:
