@@ -27,7 +27,7 @@ EOF
 }
 
 write() {
-    write_file "~/.bashrc"
+    write_file ~/.bashrc
 }
 
 write_file() {
