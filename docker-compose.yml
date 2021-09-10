@@ -61,7 +61,7 @@ services:
       - "traefik.http.middlewares.mlflow-redirectscheme.redirectscheme.permanent=true"
       - traefik.http.routers.mlflow.middlewares=mlflow-redirectscheme@docker,mlflow-basicauth@docker
       - traefik.docker.network=mlflow-docker-azure_traefik_default
-      - "traefik.http.middlewares.mlflow-basicauth.basicauth.users=$MLFLOW_TRACKING_USERNAME:$MLFLOW_TRACKING_PASSWORD"
+      - "traefik.http.middlewares.mlflow-basicauth.basicauth.users=$MLFLOW_TRACKING_USERNAME:$MLFLOW_TRACKING_PASSWORD_HASH"
     entrypoint: >
         wait-for-it traefik:443 -t 90 --
         wait-for-it mysql:3306 -t 180 --

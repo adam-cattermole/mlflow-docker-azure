@@ -42,6 +42,7 @@ export MYSQL_USER=\"$MYSQL_USER\"
 export MYSQL_PASSWORD=\"$MYSQL_PASSWORD\"
 export MLFLOW_TRACKING_USERNAME=\"$MLFLOW_TRACKING_USERNAME\"
 export MLFLOW_TRACKING_PASSWORD=$(printf "\"%q\"" $MLFLOW_TRACKING_PASSWORD)
+export MLFLOW_TRACKING_PASSWORD_HASH=$(printf "\"%q\"" $MLFLOW_TRACKING_PASSWORD_HASH)
 export MLFLOW_TRACKING_HOSTNAME=\"$MLFLOW_TRACKING_HOSTNAME\"
 export MLFLOW_TRACKING_URI=\"https://$MLFLOW_TRACKING_HOSTNAME\"
 export AZURE_STORAGE_ACCESS_KEY=\"$AZURE_STORAGE_ACCESS_KEY\"
@@ -66,7 +67,8 @@ if [ -z "$1" ]; then
     exit 1
 else
     if [ -n "$2" ]; then
-        MLFLOW_TRACKING_PASSWORD=$(htpasswd -nb $MLFLOW_TRACKING_USERNAME $2 | cut -d ':' -f2)
+        MLFLOW_TRACKING_PASSWORD="$2"
+        MLFLOW_TRACKING_PASSWORD_HASH=$(htpasswd -nb "$MLFLOW_TRACKING_USERNAME" "$MLFLOW_TRACKING_PASSWORD" | cut -d ':' -f2)
     else
         if [ "$1" == "list" ] || [ "$1" == "write" ]; then
             echo "No password provided"
