@@ -62,7 +62,7 @@ help() {
     echo "   > list        [password]         - Write variables to stdout"
     echo "   > write       [password]         - Write variables to .bashrc"
     echo "   > write_file  [password]  [file] - Write variables to [file]"
-    echo "   > help              - Display this help"
+    echo "   > help                           - Display this help"
     echo "------------------------------------------------------------------"
 }
 

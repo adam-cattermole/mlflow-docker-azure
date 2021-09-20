@@ -61,5 +61,19 @@ check_az() {
     fi
 }
 
+help() {
+    echo "------------------------------------------------------------------"
+    echo "-                       Available commands                       -"
+    echo "------------------------------------------------------------------"
+    echo "   > create_sa    - Create storage account from env vars"
+    echo "   > help         - Display this help"
+    echo "------------------------------------------------------------------"
+}
+
+if [ -z "$1" ]; then
+    help
+    exit 1
+fi
+
 
 $*
