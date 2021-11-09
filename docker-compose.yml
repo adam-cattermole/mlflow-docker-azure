@@ -44,6 +44,8 @@ services:
   mlflow:
     image: mlflow
     container_name: mlflow
+    environment:
+      - AZURE_STORAGE_ACCESS_KEY=${AZURE_STORAGE_ACCESS_KEY}
     build:
       context: ./mlflow
       dockerfile: Dockerfile
